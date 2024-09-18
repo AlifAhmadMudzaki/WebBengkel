@@ -71,7 +71,7 @@ if (!isset($_SESSION['id_user'])) {
           echo "<td>{$row['no_telp']}</td>";
           echo "<td>
                     <a href='edit_supplier.php?id_supplier={$row['id_supplier']}' class='edit-button'>Edit</a>
-                    <form action='delete_sparepart.php' method='POST' style='display:inline;'>
+                    <form action='delete_supplier.php' method='POST' style='display:inline;'>
                         <input type='hidden' name='id_supplier' value='{$row['id_supplier']}'>
                         <button type='submit' class='delete-button' onclick='return confirm(\"Are you sure you want to delete this item?\")'>Delete</button>
                     </form>

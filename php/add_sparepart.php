@@ -117,9 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if (isset($errors['general'])): ?>
                 <p class="error"><?php echo $errors['general']; ?></p>
             <?php endif; ?>
+        </form>
     </div>
-
-    </form>
     <!-- Success Modal -->
     <div id="successModal" class="modal">
         <div class="modal-content">
