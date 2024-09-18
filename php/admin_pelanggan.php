@@ -75,7 +75,7 @@ if (!isset($_SESSION['id_user'])) {
           
 
           echo "<td>
-                    <a href='edit_user.php?id_user={$row['id_user']}' class='edit-button'>Edit</a>
+                    <a href='edit_pelanggan.php?id_user={$row['id_user']}' class='edit-button'>Edit</a>
                     <form action='delete_pelanggan.php' method='POST' style='display:inline;'>
                         <input type='hidden' name='id_user' value='{$row['id_user']}'>
                         <button type='submit' class='delete-button' onclick='return confirm(\"Are you sure you want to delete this item?\")'>Delete</button>
@@ -94,7 +94,7 @@ if (!isset($_SESSION['id_user'])) {
       const searchValue = this.value.toLowerCase();
 
       // Get all rows from the table
-      const rows = document.querySelectorAll('#userTable tbody tr');
+      const rows = document.querySelectorAll('#sparepartTable tbody tr');
 
       // Loop through the rows and filter based on the input
       rows.forEach(function(row) {
