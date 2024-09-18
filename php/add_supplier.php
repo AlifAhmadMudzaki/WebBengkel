@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- No Telp -->
             <div class="form-group">
                 <label for="no_telp">No Telepon:</label>
-                <input type="phone" id="no_telp" name="no_telp" required">
+                <input type="number" id="no_telp" name="no_telp" required">
             </div>
 
             <!-- Submit Button -->
