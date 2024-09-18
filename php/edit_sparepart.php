@@ -23,8 +23,8 @@ $is_editing = isset($_GET['id_sparepart']) && !empty($_GET['id_sparepart']);
 if ($is_editing) {
     $id_sparepart = mysqli_real_escape_string($conn, $_GET['id_sparepart']);
     // Fetch existing data
-    $query_sparepart = "SELECT * FROM sparepart WHERE id_sparepart = '$id_sparepart'";
-    $result_sparepart = mysqli_query($conn, $query_sparepart);
+    $query_supplier = "SELECT * FROM sparepart WHERE id_sparepart = '$id_sparepart'";
+    $result_sparepart = mysqli_query($conn, $query_supplier);
     if ($result_sparepart && mysqli_num_rows($result_sparepart) > 0) {
         $row_sparepart = mysqli_fetch_assoc($result_sparepart);
         $nama_sparepart = $row_sparepart['nama_sparepart'];
@@ -163,6 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 const closeModal = document.getElementById('closeModal');
                 closeModal.onclick = function() {
                     modal.style.display = 'none'; // Close modal
+                    window.location.href = 'admin_sparepart.php';
                 };
             });
             <?php unset($_SESSION['show_success_modal']); // Clear the session variable after showing the modal 

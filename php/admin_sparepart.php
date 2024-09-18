@@ -62,7 +62,7 @@ if (!isset($_SESSION['id_user'])) {
 
 
 
-        $query = "SELECT id_sparepart, nama_sparepart, harga_sparepart, status, id_supplier, 
+        $query = "SELECT id_sparepart, nama_sparepart, harga_sparepart, id_supplier, 
                 status FROM sparepart ";
         $result = mysqli_query($conn, $query);
 

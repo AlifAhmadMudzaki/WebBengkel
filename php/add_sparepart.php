@@ -19,8 +19,8 @@ $id_sparepart = $nama_sparepart = $harga_sparepart = $status = $id_supplier = ""
 $errors = array();
 
 // Fetch the next auto-incremented id_sparepart from the database
-$query_sparepart = "SELECT MAX(id_sparepart) AS last_id FROM sparepart";
-$result_sparepart = mysqli_query($conn, $query_sparepart);
+$query_supplier = "SELECT MAX(id_sparepart) AS last_id FROM sparepart";
+$result_sparepart = mysqli_query($conn, $query_supplier);
 $row_sparepart = mysqli_fetch_assoc($result_sparepart);
 $id_sparepart = $row_sparepart['last_id'] ? $row_sparepart['last_id'] + 1 : 1; // Default to 1 if no records found
 

@@ -188,6 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 const closeModal = document.getElementById('closeModal');
                 closeModal.onclick = function() {
+                    modal.style.display = 'none'; // Close modal
                     window.location.href = 'customer_service.php';
                 };
             });
