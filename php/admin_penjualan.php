@@ -40,6 +40,8 @@ if (!isset($_SESSION['id_user'])) {
       <form method="GET" action="">
         <label for="month">Bulan:</label>
         <select name="month" id="month">
+          <option value="">Semua Bulan</option> <!-- Option for showing all months -->
+
           <?php
           // Array of months in Indonesian
           $monthsIndo = [
@@ -70,6 +72,8 @@ if (!isset($_SESSION['id_user'])) {
 
         <label for="year">Tahun:</label>
         <select name="year" id="year">
+          <option value="">Semua Tahun</option> <!-- Option for showing all years -->
+
           <?php
           $currentYear = isset($_GET['year']) ? $_GET['year'] : date('Y');
           for ($y = date('Y') - 5; $y <= date('Y'); $y++) {
@@ -110,11 +114,24 @@ if (!isset($_SESSION['id_user'])) {
         $selectedMonth = isset($_GET['month']) ? $_GET['month'] : date('m');
         $selectedYear = isset($_GET['year']) ? $_GET['year'] : date('Y');
 
-        // Query to get penjualan for the selected month
-        $query = "SELECT id_penjualan, nama_sparepart, jumlah_sparepart, harga, tanggal,
-                  (jumlah_sparepart * harga) AS total
-                  FROM penjualan 
-                  WHERE MONTH(tanggal) = '$selectedMonth' AND YEAR(tanggal) = '$selectedYear'";
+        // Base query to fetch penjualan records
+        $query = "SELECT id_penjualan, nama_sparepart, jumlah_sparepart, harga, tanggal, 
+        (jumlah_sparepart * harga) AS total 
+        FROM penjualan";
+
+        // Add conditions based on the selected month and year
+        if (!empty($selectedMonth) && !empty($selectedYear)) {
+          // If both month and year are selected
+          $query .= " WHERE MONTH(tanggal) = '$selectedMonth' AND YEAR(tanggal) = '$selectedYear'";
+        } elseif (empty($selectedMonth) && !empty($selectedYear)) {
+          // If only the year is selected (i.e., "Semua Bulan")
+          $query .= " WHERE YEAR(tanggal) = '$selectedYear'";
+        } elseif (!empty($selectedMonth) && empty($selectedYear)) {
+          // If only the month is selected, although this case may not occur due to UI constraints
+          $query .= " WHERE MONTH(tanggal) = '$selectedMonth'";
+        }
+
+        // Execute the query
         $result = mysqli_query($conn, $query);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -130,12 +147,12 @@ if (!isset($_SESSION['id_user'])) {
           echo "<td>{$formattedTotal}</td>";
           echo "<td>{$formattedDate}</td>";
           echo "<td>
-                    <a href='edit_penjualan.php?id_penjualan={$row['id_penjualan']}' class='edit-button'>Edit</a>
-                    <form action='delete_penjualan.php' method='POST' style='display:inline;'>
-                        <input type='hidden' name='id_penjualan' value='{$row['id_penjualan']}'>
-                        <button type='submit' class='delete-button' onclick='return confirm(\"Apakah Anda yakin ingin menghapus item ini?\")'>Delete</button>
-                    </form>
-                  </td>";
+            <a href='edit_penjualan.php?id_penjualan={$row['id_penjualan']}' class='edit-button'>Edit</a>
+            <form action='delete_penjualan.php' method='POST' style='display:inline;'>
+                <input type='hidden' name='id_penjualan' value='{$row['id_penjualan']}'>
+                <button type='submit' class='delete-button' onclick='return confirm(\"Apakah Anda yakin ingin menghapus item ini?\")'>Delete</button>
+            </form>
+          </td>";
           echo "</tr>";
         }
         ?>
