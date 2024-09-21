@@ -514,3 +514,95 @@ table tr:nth-child(even) {
 table tr:hover {
   background-color: #f1f1f1;
 }
+
+
+table {
+  width: 100%;
+  /* Full width */
+  table-layout: fixed;
+  /* Fixed layout to prevent resizing */
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Set a fixed width for each column */
+th,
+td {
+  word-wrap: break-word;
+  /* Ensure long content wraps inside the cell */
+}
+
+/* Example widths for each column */
+th:nth-child(1),
+td:nth-child(1) {
+  /* no_antrian */
+  width: 15%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  /* id_kendaraan */
+  width: 20%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  /* nama_pelanggan */
+  width: 20%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  /* keterangan */
+  width: 20%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  /* tanggal */
+  width: 20%;
+}
+th:nth-child(6),
+td:nth-child(6) {
+  /* tanggal */
+  width: 20%;
+}
+th:nth-child(7),
+td:nth-child(7) {
+  /* tanggal */
+  width: 20%;
+}
+th:nth-child(8),
+td:nth-child(8) {
+  /* tanggal */
+  width: 20%;
+}
+
+
+th:nth-child(9),
+td:nth-child(9) {
+  /* status */
+  width: 15%;
+  /* Reduce the width of the status column */
+  white-space: nowrap;
+  /* Prevent wrapping for short status values */
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
