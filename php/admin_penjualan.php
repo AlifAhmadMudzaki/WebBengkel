@@ -43,9 +43,18 @@ if (!isset($_SESSION['id_user'])) {
           <?php
           // Array of months in Indonesian
           $monthsIndo = [
-            '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
-            '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
-            '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember'
           ];
 
           // Get current month or selected month
@@ -111,13 +120,15 @@ if (!isset($_SESSION['id_user'])) {
         while ($row = mysqli_fetch_assoc($result)) {
           $formattedHarga = 'Rp ' . number_format($row['harga'], 0, ',', '.');
           $formattedTotal = 'Rp ' . number_format($row['total'], 0, ',', '.');
+          $formattedDate = date('d-m-Y', strtotime($row['tanggal']));
+
           echo "<tr>";
           echo "<td>{$row['id_penjualan']}</td>";
           echo "<td>{$row['nama_sparepart']}</td>";
           echo "<td>{$row['jumlah_sparepart']}</td>";
           echo "<td>{$formattedHarga}</td>";
           echo "<td>{$formattedTotal}</td>";
-          echo "<td>{$row['tanggal']}</td>";
+          echo "<td>{$formattedDate}</td>";
           echo "<td>
                     <a href='edit_penjualan.php?id_penjualan={$row['id_penjualan']}' class='edit-button'>Edit</a>
                     <form action='delete_penjualan.php' method='POST' style='display:inline;'>
@@ -131,7 +142,7 @@ if (!isset($_SESSION['id_user'])) {
       </tbody>
     </table>
   </div>
-  
+
   <script>
     // Function to filter table rows based on search input
     document.getElementById('search').addEventListener('input', function() {
