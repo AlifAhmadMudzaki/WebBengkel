@@ -93,10 +93,12 @@ if (!isset($_SESSION['id_user'])) {
               return 'Tidak Ada'; // Fallback if an unexpected status is found
           }
         }
-        if (mysqli_num_rows($result) > 0){
+        if (mysqli_num_rows($result) > 0) {
           while ($row = mysqli_fetch_assoc($result)) {
             $statusClass = getStatusClass($row['status']);
             $statusText = getStatusText($row['status']);
+            $formattedDate = date('d-m-Y', strtotime($row['tanggal']));
+
             echo "<tr>";
             echo "<td>{$row['id_service']}</td>";
             echo "<td>{$row['no_kendaraan']}</td>";
@@ -104,11 +106,11 @@ if (!isset($_SESSION['id_user'])) {
             echo "<td>{$row['no_antrian']}</td>";
             echo "<td>{$row['nama_pelanggan']}</td>";
             echo "<td>{$row['keterangan']}</td>";
-            echo "<td>{$row['tanggal']}</td>";
+            echo "<td>{$formattedDate}</td>";
             echo "<td class='{$statusClass}'>{$statusText}</td>";
-  
-  
-  
+
+
+
             echo "<td>
                       <a href='edit_kendaraan.php?id_service={$row['id_service']}' class='edit-button'>Edit</a>
                       <form action='delete_kendaraan.php' method='POST' style='display:inline;'>
@@ -141,12 +143,13 @@ if (!isset($_SESSION['id_user'])) {
 
       // Loop through the rows and filter based on the search and date inputs
       rows.forEach(function(row) {
-        // Get the values for the Nama_Pelanggan (second column) and Tanggal (seventh column)
+        // Get the values for the Nama_Pelanggan (fifth column) and Tanggal (seventh column)
         const userName = row.querySelectorAll('td')[4].textContent.toLowerCase(); // Nama_Pelanggan
         const dateValue = row.querySelectorAll('td')[6].textContent; // Tanggal
 
-        // Convert date value to ISO format for easy comparison
-        const formattedDate = new Date(dateValue).toISOString().slice(0, 10);
+        // Convert the d-m-Y date format to YYYY-MM-DD for easy comparison
+        const parts = dateValue.split('-'); // Split the date by '-'
+        const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // Reformat to YYYY-MM-DD
 
         // Show row if search matches and date filter is either empty or matches the row date
         const searchMatch = userName.includes(searchValue);
