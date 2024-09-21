@@ -23,7 +23,7 @@ $is_editing = isset($_GET['id_service']) && !empty($_GET['id_service']);
 if ($is_editing) {
     $id_service = mysqli_real_escape_string($conn, $_GET['id_service']);
     // Fetch existing data
-    $query_service = "SELECT * FROM service WHERE id_service = '$id_service'";
+    $query_service = "SELECT * FROM kendaraan WHERE id_service = '$id_service'";
     $result_service = mysqli_query($conn, $query_service);
     if ($result_service && mysqli_num_rows($result_service) > 0) {
         $row_service = mysqli_fetch_assoc($result_service);
@@ -40,7 +40,7 @@ if ($is_editing) {
     }
 } else {
     // Redirect to add_service.php if no ID is provided
-    header('Location: add_kendaraan.php');
+    header('Location: edit_kendaraan.php');
     exit();
 }
 
@@ -63,7 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Update the spare part in the database
     $query_update = "UPDATE kendaraan 
-                     SET no_kendaraan = '$no_kendaraan', id_user = '$id_user', no_antrian = '$no_antrian', nama_pelanggan = '$nama_pelanggan', keterangan = '$keterangan', tanggal = '$tanggal' 
+                     SET no_kendaraan = '$no_kendaraan', id_user = '$id_user', no_antrian = '$no_antrian', 
+                     nama_pelanggan = '$nama_pelanggan', keterangan = '$keterangan', tanggal = '$tanggal', status = '$status'
                      WHERE id_service = '$id_service'";
     if (mysqli_query($conn, $query_update)) {
         $_SESSION['show_success_modal'] = "Service Kendaraan Berhasil Diperbarui.";
@@ -101,56 +102,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Nama service -->
             <div class="form-group">
                 <label for="no_kendaraan">No Kendaraan:</label>
-                <input type="text" id="no_kendaraan" name="no_kendaraan" value="<?php echo $no_kendaraan; ?>" required>
+                <input type="text" id="no_kendaraan" name="no_kendaraan" value="<?php echo $no_kendaraan; ?>" readonly>
             </div>
 
             <!-- Harga service -->
             <div class="form-group">
-                <label for="id_user">:ID User</label>
-                <input type="number" id="id_user" name="id_user" value="<?php echo $id_user; ?>" required oninput="formatCurrency(this)">
+                <label for="id_user">ID User :</label>
+                <input type="number" id="id_user" name="id_user" value="<?php echo $id_user; ?>" readonly>
             </div>
 
             <div class="form-group">
-                <label for="no_antrian">:No Antrian</label>
-                <input type="number" id="no_antrian" name="no_antrian" value="<?php echo $no_antrian ?>" required oninput="formatCurrency(this)">
+                <label for="no_antrian">No Antrian :</label>
+                <input type="number" id="no_antrian" name="no_antrian" value="<?php echo $no_antrian ?>" readonly>
             </div>
 
             <div class="form-group">
-                <label for="nama_pelanggan">:Nama Pelanggan</label>
-                <input type="text" id="nama_pelanggan" name="nama_pelanggan" value="<?php echo $nama_pelanggan ?>" required oninput="formatCurrency(this)">
+                <label for="nama_pelanggan">Nama Pelanggan :</label>
+                <input type="text" id="nama_pelanggan" name="nama_pelanggan" value="<?php echo $nama_pelanggan ?>" readonly>
             </div>
 
             <div class="form-group">
-                <label for="keterangan">:Keterangan</label>
-                <input type="text" id="keterangan" name="keterangan" value="<?php echo $keterangan ?>" required oninput="formatCurrency(this)">
+                <label for="keterangan">Keterangan :</label>
+                <input type="text" id="keterangan" name="keterangan" value="<?php echo $keterangan ?>" readonly>
             </div>
 
             <div class="form-group">
-                <label for="tanggal">:Tanggal</label>
-                <input type="date" id="tanggal" name="tanggal" value="<?php echo $tanggal ?>" required oninput="formatCurrency(this)">
+                <label for="tanggal">Tanggal :</label>
+                <input type="date" id="tanggal" name="tanggal" value="<?php echo $tanggal ?>" readonly>
             </div>
-            
+
             <!-- Status -->
             <div class="form-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status" required>
+                    <option value="0" <?php if ($status == "0") echo "selected"; ?>>Menunggu</option>
                     <option value="1" <?php if ($status == "1") echo "selected"; ?>>Sedang Diperbaiki</option>
-                    <option value="0" <?php if ($status == "0") echo "selected"; ?>>Selesai Diperbaiki</option>
+                    <option value="2" <?php if ($status == "2") echo "selected"; ?>>Selesai</option>
+                    <option value="3" <?php if ($status == "3") echo "selected"; ?>>Tidak Ada</option>
+
                 </select>
             </div>
 
             <!-- ID service (Dropdown from database) -->
-            <div class="form-group">
-                <label for="id_service">Service:</label>
-                <select id="id_service" name="id_service" required>
-                    <option value="">-- Pilih service --</option>
-                    <?php while ($row_service = mysqli_fetch_assoc($result_service)) { ?>
-                        <option value="<?php echo $row_service['id_service']; ?>" <?php if ($id_service == $row_service['id_service']) echo "selected"; ?>>
-                            <?php echo $row_service['id_service'] . ' - ' . $row_service['nama_pelanggan']; ?>
-                        </option>
-                    <?php } ?>
-                </select>
-            </div>
+
 
             <!-- Submit Button -->
             <button type="submit" class="submit-button">Update</button>

@@ -161,7 +161,7 @@ h2 {
   color: #333;
 }
 
-.search-bar {
+.search-bar, .filter-bar {
   text-align: right;
   margin-bottom: 20px;
 }
